@@ -47,7 +47,26 @@ std::tuple<int32_t, int32_t, int32_t> ArbiterSingleForward::TopologySatelliteNet
         Ipv4Header const &ipHeader,
         bool is_request_for_source_ip_so_no_next_header
 ) {
-    return m_next_hop_list[target_node_id];
+    // return m_next_hop_list[target_node_id];
+    // 取得原本 Hypatia 查表後的轉發條目
+    auto entry = m_next_hop_list[target_node_id];
+
+    // 使用 std::get 解析 tuple 中的詳細資訊
+    int32_t next_node_id = std::get<0>(entry);
+    int32_t own_if_id    = std::get<1>(entry);
+    int32_t next_if_id   = std::get<2>(entry);
+
+    // 在控制台印出當前路徑資訊
+    std::cout
+        << "Node = "      << m_node_id           // 當前節點 ID 
+        << " target node = " << target_node_id      // 目標終點 ID 
+        << " next node = "   << next_node_id        // 下一跳衛星 ID 
+        << " my_if = "       << own_if_id           // 當前節點輸出的 Interface 
+        << " next_if = "     << next_if_id          // 下一跳節點接收的 Interface 
+        << std::endl; 
+
+    // 回傳轉發決策結果
+    return entry; 
 }
 
 void ArbiterSingleForward::SetSingleForwardState(int32_t target_node_id, int32_t next_node_id, int32_t own_if_id, int32_t next_if_id) {
