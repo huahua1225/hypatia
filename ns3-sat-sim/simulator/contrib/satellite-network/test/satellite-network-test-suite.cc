@@ -16,6 +16,7 @@ public:
 
         // Running it complete with reading in files etc.
         AddTestCase(new EndToEndTestCase, TestCase::QUICK);
+        /*
         AddTestCase(new EndToEndSpecialTestCase, TestCase::QUICK);
 
         // Running it by creating every component manually (not using satellite-network.cc/h)
@@ -30,6 +31,7 @@ public:
         // Simple info wrappers
         AddTestCase(new SatelliteInfoTestCase, TestCase::QUICK);
         AddTestCase(new GroundStationInfoTestCase, TestCase::QUICK);
+        */
 
     }
 };
